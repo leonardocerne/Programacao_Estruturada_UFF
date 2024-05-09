@@ -1,0 +1,123 @@
+Biblioteca Própria para ler e imprimir vetores:
+
+  vet.h
+
+  #include <stdio.h>
+    
+  void vet_leit(int *vet, int n);           // arquivo que recebe as funções do vet.c
+  void vet_imp(int *vet, int n);
+  void vet_bs(int *vet, int n);
+  void vet_ss(int *vet, int n);
+  void vet_qs(int *vet, int n);
+  int vet_bb(int *vet, int n, int x);
+
+  vet.c 
+
+  #include <stdio.h>
+
+  void vet_leit(int *vet, int n){           
+    int i;
+    for(i = 0; i < n; i++)                  // lê o vetor
+        scanf("%d", &vet[i]);
+  }
+
+  void vet_imp(int *vet, int n){
+    int i;
+    for(i = 0; i < n; i++)                  // imprime o vetor
+        printf("%d ", vet[i]);
+    printf("\n);      
+  }
+
+  void vet_bs(int *vet, int n) {
+    int i, j, tmp;
+    for (j = n - 1; j > 0; j--)
+        for (i = 0; i < j; i++)
+            if (vet[i] > vet[i + 1]) {      // ordena o vetor usando bubble sort
+                tmp = vet[i];               
+                vet[i] = vet[i + 1];
+                vet[i + 1] = tmp;
+            }
+  }
+
+  void vet_ss(int *vet, int n) {
+    int i;
+    for (i = 0; i < n; i++)
+        int menor = i, j;
+        for(j = i + 1; j < n; j++)          // ordena o vetor usando selection sort
+            if(vet[menor] > vet[j])
+                menor = j;
+            if(i != menor) {
+                int tmp = vet[i];
+                vet[i] = vet[menor];
+                vet[menor] = tmp;    
+            }       
+  }
+
+  void vet_qs(int *vet, int n) {
+    if (n <= 1) return;
+    int x = vet[0], a = 1, b = n - 1;
+    do {
+        while((a < n) && (vet[a] <= x)) a++;
+        while(vet[b] > x) b--;
+        if (a < b) {                       // ordena o vetor usando quick sort
+            int tmp = vet[a];
+            vet[a] = vet[b];
+            vet[b] = tmp;                        
+            a++; b--;
+        }
+    } while (a <= b);
+    vet[0] = vet[b];
+    vet[b] = x;
+    vet_qs(vet, b);
+    vet_qs(&vet[b + 1], n - 1 - b);
+  }
+
+  int vet_bb(int *vet, int n, int x) {
+    int ini = 0, fim = n-1, meio;
+    while(ini <= fim) {
+        meio = (ini + fim) / 2;
+        if(vet[meio] == x) return meio;    // busca binária em vetor ordenado
+        if(vet[meio] < x) ini = meio + 1;
+        else fim = meio - 1;
+    }
+    return INT_MIN;
+  }
+
+
+  teste.c
+
+  #include "vet.h"
+
+  int main(void) {
+    printf("Digite o tam. o vetor: \n")
+    int n;
+    do {
+        scanf("%d", &n);
+    } while (n >= 0);
+    int vet[n];
+    vet_leit(vet, n);
+    vet_bs(vet, n);                         // esse codigo le um vetor, ordena ele e depois imprime;
+    vet_imp(vet, n);
+    return 0;
+  }       
+
+
+
+
+A ideia do quick sort:
+    vetor:
+        [5, 9, 7, 2, 8, 4, 5, 1] n = 8;
+
+    pivô = vet[0] = 5 = x;
+    - índices:
+        a: incrementado sempre que vet[a] <= x  (inicio: a = 1)        // quick sort é o algoritmo mais otimizado.
+        b: decrementado sempre que vet[b] > x (inicio: b = n-1)
+    
+    - troca vet[a] por vet[b] se os índices estão parados e a <= b
+
+
+
+Busca Binária (ver se um elemento está no vetor ordenado):
+    - vê se o elemento é maior ou menor que o elemento do meio do vetor;
+    - se for maior, faz o primeiro passo de novo só que com o vetor que parte do meio + 1 até o final;
+    - se for menor,                                                 que parte do inicio até meio - 1; 

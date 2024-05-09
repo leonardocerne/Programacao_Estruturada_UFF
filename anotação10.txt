@@ -1,0 +1,50 @@
+Tipos Estruturados:
+ *motivação/w
+    - Agrupar tipos de dados distintos (ou não) p se referenciar a um tipo.
+
+
+ estrutura:
+    struct ponto{
+        float x, y;
+    }
+
+    exemplo:
+     typedef struct ponto TPonto;
+
+     TPonto p1;
+    struct ponto p2;   // definindo variaveis com o tipo Criando
+
+    ou
+
+     typedef struct ponto{
+         float x,y;
+     } TPonto;
+
+     TPonto vet[100]; // cria um vetor que cada elemento tem um valor float x e um y
+
+    outro exemplo:
+     typedef struct aluno{
+        float cr;
+        int mat;            // cria um tipo com um float cr, um int pra mat e uma string de 9 caracteres;
+        char dn[9];
+     } TAluno;
+    
+    na main:
+        TAluno Leo;
+        strcpy(Leo.dn, "28042005");         // cria um TAluno Leo com data de nascimento 28042005
+
+        TAluno *a;      // cria um ponteiro tipo TAluno 
+        a = &leo;       // o ponteiro recebe o endereço de leo
+        a -> cr=9.9;    // o valor leo.cr recebe 9.9
+
+
+ tabela:
+    variável:           Acesso ao campo(cr)         Acesso ao endereço do campo(cr)
+    
+    TAluno al;          al.cr = 9.5                 scanf("%f", &al.cr);               
+
+    TAluno *pal;        pal -> cr = 9.5             scanf("%f", &pal->cr);              // ponteiro           
+    pal = (TAluno*) 
+    malloc(sizeof(TAluno))
+
+ exercício:

@@ -1,0 +1,113 @@
+    Funções:
+
+    * motivação?
+
+    <tipo> <nomefunção>(<parâmetros>){
+        // corpo da funçao
+    }
+
+    * C: passage por valor
+
+    Exemplo:
+
+    #include <stdio.h>   //1
+
+    float kmh2ms(float x) {
+        return x / 3.6;        //2
+    }
+    int main(void) {                                       //programa que pede um número em km/h e transforma em m/s
+        float x,y;
+        scanf("%f", &x);                 //3
+        y = kmh2ms(x);
+        printf("%f km/h -> m/s: %f\n", x, y);
+    }
+
+    Outro exemplo: (melhor organizado)
+
+    //1
+
+    float kmh2ms(float x);     // uma indicação ao compilador que existe essa função
+
+    //3
+    //2
+
+    *Funções conhecidas:
+        int main(void) {...}
+        int printf(char *formato, <lista de variáveis>);
+        int scanf(char *formato, <endereços das variáveis>);
+
+
+        0BSS:
+
+    *NÃO EXISTEM FUNÇÕES CRIADAS DENTRO DE OUTRAS!! (nem dentro da main)
+
+    *AS FUNÇÕES SÃO INDEPENDENTES ENTRE SI
+
+    *É NORMAL CHAMAR, DENTRO DE UMA FUNÇÃO, OUTRAS FUNÇÕES
+
+    *COMO EU FAÇO P/ INSERIR INFOS NA FUNÇÃO? PARÂMETROS
+    
+    *COMO EU FAÇO P/ RETORNAR INFO DA FUNÇÃO? RETURN
+
+    *A EXECUÇÃO DE UM PROGRAMA SEGUE O MODELO DE PILHA
+
+    *PILHA DE EXECUÇÃO:
+        -Guarda infos das variáveis e parâmetros, quando as funções são executadas.
+        -O controle da pilha passa a última função chamada.
+        -Execução acaba: o controle da pilha passapara a função que a chamou
+
+
+    Exemplo:
+
+    #include <stdio.h>
+    void troca(int x, int y) {
+        int tmp = x;
+        x = y;            // tmp = variavel temporaria usada só nessa função
+        y = tmp;
+    }
+    int main(void) {
+        int x = 3, y = 5;
+        troca(x, y);
+        printf("x = %d\t y = %d\n", x, y);         // por causa da pilha, a função "troca" não atualiza as variáveis
+        return 0;
+    }
+
+    *Solução p/o problema da função troca: Ponteiros!!
+
+    - variáveis ponteiros:
+        *em ponteiros são guardados os endereços das variáveis!!
+
+    * ponteiros cabem em 4 bytes;
+
+    Exemplo:
+        int main(void){
+            int *p, x, y;
+            char *q, r, s;
+            double *w, d, e;
+            x = 3;
+            p = &x;  // recebe o endereço de x
+            q = &r;  //                      r     e assim pode apontar pra esse endereço depois
+            w = &d;  //                      d
+            x++; // incrementa o x em 1;
+            (*p)++; // incrementa o que o p tá apontando em 1, nesse caso, o x incrementa em 1
+        }
+
+    Consertando o exemplo que deu erro:
+        #include <stdio.h>
+            void troca(int *x, int *y) {
+                int tmp = *x;
+                *x = *y;
+                *y = tmp;
+            }
+            int main(void) {
+                int x = 3, y = 5;
+                troca(&x, &y);
+                printf("x = %d\t y = %d\n", x, y);
+                return 0;
+            }
+        
+        * neste exemplo, quando a função é chamada, os parâmetros da função serão os endereços de x e y, e na função, pre-
+          cisa ser especificado que estamos trabalhando com o valor que está alocado no endereço chamado, nesse exemplo, a
+          função pega os valores de x e y, utilizando o *x } expressa o valor que está no endereço x.
+          
+        

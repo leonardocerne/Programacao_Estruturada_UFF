@@ -1,0 +1,98 @@
+Arquivos Binários
+ Leitura de dados:
+    int fread(void *ptr, int tam_cada_elem, int nelem, FILE *fp);
+     ptr? Conteúdo do arquivo é copiado para o ponteiro
+     tam_cada_elem? Tamanho em bytes de cada elem
+     FILE *fp? ponteiro do arquivo
+     nelem? número de elementos
+
+ Escrita de dados:
+    int fwrite(void *ptr, int tam_cada_elem, int nelem, FILE *fp);
+
+ Movendo o ponteiro de um arquivo binário:
+    int fseek(FILE *fp, long int offset, int CTE_ORIGEM);
+    CTE_ORIGEM: 
+        . SEEK_CUR (=1): posição atual;
+        . SEEK_SET (=0): início do arquivo
+        . SEEK_END (=2): fim do arquivo
+    Posição final? (offset + CTE_ORIGEM) bytes
+    Retorno: ou = 0, se estiver tudo certo ou != 0, indicando erro
+
+ Inicializa ponteiro:
+    void rewind(FILE *fp); == fseek(fp, 0L, SEEK_SET);
+
+ Retorna a posição do ponteiro:
+    long int ftell(FILE *fp);
+
+
+ Exemplo:
+    void escr_arq_bin(char *narq) {
+        FILE *fp = fopen(narq, "wb") // abre um arquivo para escrita em binario
+        if(!fp)exit(1); // certifica que nao vai criar arquivo em um lugar que nao pode
+        int ant, atual;
+        printf("se o elemento atual for menor ou igual ao anterior seu arquivo nao recebera novos dados\n");
+        scanf("%d", &ant);
+        fwrite(&ant, sizeof(int), 1, fp);
+        do {
+            scanf("%d", &atual);
+            if(atual <= ant) break;
+            fwrite(&atual, sizeof(int), 1, fp);                  // escreve um arquivo binário de elementos inteiros ordenados
+            ant = atual;
+        } while(1);
+        fclose(fp);
+    }
+    int bb_arq(char *narq, int x) {
+        FILE *fp = fopen(narq, "rb");
+        if(!fp)exit(1);
+        int ini = 0, fim, meio, elem_meio;
+        fseek(fp, 0L, SEEK_END);
+        fim = ftell(fp) - sizeof(int);
+        while(ini <= fim){
+            meio = (((ini + fim) / sizeof(int))/2)*sizeof(int) // operação para buscar o endereço do meio sem erros
+            fseek(fp, meio, SEEK_SET);
+            fread(&elem_meio, sizeof(int), 1, fp);
+            if(elem_meio==x){
+                fclose(fp);
+                return meio;                            // busca binaria em arquivo binario
+            }
+            if(elem_meio < x) ini = meio + sizeof(int);
+            else fim = meio - sizeof(int);
+        }
+        fclose(fp);
+        return -1;
+    }
+ 
+ Selection Sort em arquivo em binário:
+    void ss_arq(char *narq) {
+        FILE *fp = fopen(narq, "rb+"); // lê os elementos e corrige, sem alterar o tamanho do arquivo
+        if(!fp)exit(1);
+        int i = 0, resp_i, j, resp_j, menor, elem_menor, aux, elem_j;
+        while(1) {
+            menor = i;
+            fseek(fp, menor, SEEK_SET);
+            resp_i = fread(&elem_menor, sizeof(int), 1, fp);
+            aux = elem_menor;
+            if(resp_i != 1) {
+                fclose(fp);
+                return;
+            }
+            while(1){
+                j = ftell(fp);
+                resp_j= fread(&elem_j, sizeof(int), 1, fp);
+                if(resp_j != 1) break;
+                if(elem_menor > elem_j) {
+                    menor = j;
+                    elem_menor = elem_j;
+                }
+            }
+            if(menor != i){
+                fseek(fp, menor, SEEK_SET);
+                fwrite(&aux, sizeof(int), 1, fp);
+                fseek(fp, i, SEEK_SET);
+                fwrite(&elem_menor, sizeof(int), 1, fp);
+            }
+            else i += sizeof(int);
+        }
+    }
+
+    

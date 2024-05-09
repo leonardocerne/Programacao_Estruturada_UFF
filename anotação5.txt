@@ -1,0 +1,43 @@
+Criando um código de quick sort genérico(funciona pra todo tipo)
+
+  qsort: stdlib.h // biblioteca que possui o 
+
+  void qsort(void *vet, int n, int tam_cada_elem_bytes, int *comp(const void *, const void *));
+
+  parâmetros explicados:
+    - vetor;
+    - tamanho n do vetor;
+    - tamanho em bytes de cada elemento;
+    - ponteiro da função de comparação de 2 posições do vetor!!
+      . const void * -> o elemento da posição solicitada não pode ser alterado!
+
+
+  exemplo: comparação de inteiros
+    int cmp_int(const void *x, const void *y) { 
+        int *px = (int *)x, *py = (int *)y; // derreferenciamento, ou seja, afirma o tipo dos elementos
+        if ((*px) < (*py)) return -1;           //função comparação
+        if ((*px) > (*py)) return 1;
+        return 0;               
+    }    
+
+
+*Qual a limitação do vetor?
+    O tamanho fixo!
+
+    1 - uso de memória
+
+    num código, além das variáveis estáticas e globais existe a área de memória alocada dinamicamente(heap ou monte)
+
+    *na stdlib.
+
+        void *malloc(int numbytes);
+        void *realloc(void *v, int novo-tam-bytes);       // alocação de memória 
+
+            retorno:
+                != null, se ok!
+                =null, se erro.
+
+        void free(void *v);         // liberação de memória  
+        // pra todo malloc ou realloc que você faça, tem que ter um free associado
+
+        

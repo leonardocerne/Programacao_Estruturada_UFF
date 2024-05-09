@@ -1,0 +1,134 @@
+Chamadas padrão de C:
+
+ *comum:
+    int main(void) {
+        .
+        .
+        .
+    }
+
+  *outro tipo:
+    intmain(int argc, char **argv) {
+        .
+        .                               // **argv matriz de strings ; argc== quantas linhas da matriz
+        .
+    }  
+
+    como o argv é uma matriz de strings, voce sempre deve converter para o tipo necessario, exemplo, para transformar em inteiro
+    é necessario usar a função "atoi(str)", pertencente a biblioteca <stdlib> que transforma a string em um numero inteiro
+
+
+Arquivos:
+ *motivações:
+    -guardar informações persistentes;
+
+ *leitura de dados:
+    - abrir o arq;
+    - ler dados{
+        elemento a elemento, em arqs texto
+        qualquer elemento, se binário
+      }
+    - processar os dados;
+    - fechar o arq;
+
+ *escrita de arq.:
+    - processar dados;
+    - abrir o arq(esc);
+    - escrever infos{
+        elem a elem, em arq texto
+        bloco de infos, binário
+      }
+    -fechar o arquivo;  
+
+ *abertura de arquivos:
+    FILE *fopen(char *nome_arq, char *modo);
+        retorna alguma coisa diferente de 0 se estiver tudo certo ou NULL indicando erro;
+
+ *operações em arquivos texto:
+
+    "r" ou "rt" abre um arquivo para leitura
+    "w" ou "wt" abre um arquivo para escrita
+    "a" ou "at" abre um arquivo para escrita usando a tecnica de append (escrevendo a partir da ultima linha do arq)
+    "r+" abre um arquivo para leitura e escrita
+    "w+" cria um arquivo para leitura e escrita, se o arquivo existir, o conteudo é destruído
+    Fechamento:
+        int fclose(FILE *fp);
+        retorno: ou =0 se estiver tudo certo, ou EOF, se tiver erro
+
+    Leitura de dados:
+        int fscanf(FILE *fp, char *formato, <lista_endereços_variáveis>);
+    
+    Escrita de dados:
+        int fprintf(FILE *fp, char *formato, <lista_variáveis>);
+
+ *exemplo:
+
+  arq1.txt :
+    1
+    3
+    5
+    7
+    8
+    10
+    11
+  arq2.txt :
+    0
+    1
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    12
+  resp.txt : //nesse exemplo a gente compara dois arquivos e ordena as informações dos dois juntos
+    0
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+    11
+    12
+ como o código fica:
+    void merge(char *narq1, char *narq2, char *ns) {
+        FILE *fp1 = fopen(narq1, "r"), *fp2 = fopen(narq2, "r"), *fps = fopen(ns, "w");
+        if ((!fp1) || (!fp2) || (!fps)) exit(1);
+        int r1, r2, n1, n2;
+        r1 = fscanf(fp1, "%d", &n1);    // retorna 1 se foi lido com sucesso
+        r2 = fscanf(fp2, "%d", &n2);
+        while((r1==1) && (r2==1)){ //confirma que leu dois elementos validos
+            if (n1<n2){
+                fprintf(fps, "%d\n", n1);
+                r1 = fscanf(fp1, "%d", n1);       
+            }
+            else {
+                fprintf(fps, "%d\n", n2);
+                if (n1==n2) {
+                    r1 = fscanf(fp1, "%d", &n1);
+                    r2 = fscanf(fp2, "%d", &n2);
+                }
+            }
+        }
+        while(r1==1){
+            fprintf(fps, "%d\n", n1);
+            r1 = fscanf(fp1, "%d", &n1);
+        }
+        while(r2==1){
+            fprintf(fps, "%d\n", n2);
+            r2 = fscanf(fp2, "%d", &n2);
+        }
+        fclose(fp1);
+        fclose(fp1);
+        fclose(fps);
+    }
+
+ 
+
+

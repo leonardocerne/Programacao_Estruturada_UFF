@@ -1,0 +1,99 @@
+Continuando a falar sobre  alocação dinâmica:
+
+    ex:
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include "vet.h"
+
+    int *cop_ord (int *vet, int n);
+
+    int main(void) {
+        int n;
+        do{
+            scanf("%d", &n);
+        } while (n <= 0);
+        int vet[n];
+        vet_leit(vet, n);
+        vet_imp(vet, n);
+        int *resp = cop_ord(vet, n);
+        vet_imp(vet, n);                               // esse codigo pega um vetor, imprime ele, copia o vetor e ordena a copia,
+        vet_imp(resp, n);                              // e depois imprime o original de novo e a copia ordenada, usando alocação 
+        free(resp);                                    // dinâmica. 
+        return 0;   
+    }
+
+    int *cop_ord(int *vet, int n) {
+        int *resp = (int*)malloc(sizeof(int) * n);
+        if (!resp) exit(1);
+        int i;
+        for(i = 0; i < n; i++)
+            resp[i] = vet[i];
+        qsort(resp, n, sizeof(int), cmp_int);
+        return resp;    
+    }
+
+    
+Strings:
+
+    *vetores de caracteres com '\0' ao final da informação válida
+    
+    -ex:
+    #include <stdio.h>
+    int main(void) {
+        char cid[100];
+        scanf("%s", cid);       // não precisa de & pq o cid já é um endereço
+        printf("%s\n", cid);    // o scanf desse jeito vai parar no espaço em branco, ex, se vc escreve Rio de Janeiro, ia impri-
+        return 0;               // mir só "Rio"    
+    }
+
+    o certo para ler strings com espaço em branco:
+    #include <stdio.h>
+    int main(void) {
+        char cid[100];
+        scanf(" %99[^\n]", cid);       // aceita strings com espaço em branco, o número dentro do scanf tem q ser o tamanho do ve-
+        printf("%s\n", cid);           // tor - 1, que no caso é 100 - 1 == 99; 
+        return 0;                 
+    }
+
+    existe uma biblioteca para tratar strings:
+        #include <string.h>
+
+    Algumas funções da string.h:
+
+    int f1(char *s1, char*s2) {        // endereço do primeiro char de s1 e s2
+        int i=0;
+        while ((s1[i] != '\0') || (s1[i] < s2[i])) { // ((s1[i]) || (s2[i]))  se um ou o outro é diferente de '\0'
+            if ((s1[i] ==  '\0') || (s1[i] < s2[i])) return -1; // ((!s1[i]) || (...))  compara se uma string é maior que a outra
+            if ((s2[i] ==  '\0') || (s1[i] > s2[i])) return 1; // ((!s2[i]) || (...))   caracter por caracter pela tabela ascii en
+            i++;                                               //                       quanto o caracter não for '\0'              
+        }
+        return 0;
+    }
+
+    resumindo, retorna 1 se s1 > s2, -1 se s1 < s2 e 0 se s1 == s2;
+
+    Escrevendo o f1 de forma recursiva:
+    
+    int f1_rec (char *s1, char *s2) {
+        if((!s1[0]) && (!s2[0])) return 0;
+        if ((!s1[0]) || (s1[0] < s2[0])) return -1;     // compara primeiro caracter e depois chama pro segundo, nessa segunda cha-
+        if ((!s2[0]) || (s1[0] > s2[0])) return 1;      // mada o segundo caracter vira o primeiro e compara de novo, e depois cha-
+        return f1_rec(&s1[1], &s2[1]);                  // ma pro segundo, que na verdade é o terceiro caracter, e etc..
+    }
+
+    na string.h ela é chamada de int strcmp(s1,s2) e retorna 0, se s1 = s2;
+                                                            >0, se s1 > s2;
+                                                            <0, se s1 < s2;   
+
+    mais uma função de string.h:
+
+    int f2_it(char *s){
+    int i = 0;
+    while (s[i]) i++;           // retorna o tamanho da string
+    return i;
+    }
+
+    int f2_rec(char *s){
+    if (!s[0]) return 0;        // retorna o tamanho da string de forma recursiva
+    return 1 + f2_rec(&s[1]);
+    }

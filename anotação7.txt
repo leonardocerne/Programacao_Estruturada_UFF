@@ -1,0 +1,26 @@
+Matrizes:
+
+ *vetor de vetores
+
+ para inicializar matrizes em alocação estática:
+    int mat[4][2] // inicializa uma matriz com 4 linhas e 2 colunas
+    int mat1[][2] = {3, 1, 5, 2, 4, 6} inicializa uma matriz com duas colunas e 3 linhas pq tem 6 elementos
+
+ *passagem de matriz estática para funções:
+    
+    void dobra (int mat[][2], int lin, int col);
+
+    int determinante (int mat[][3], int lin, int col);
+
+ matrizes alocadas dinamicamente:
+    
+    int **matdin;
+
+    int ** aloca(int lin, int col) {
+        int **mat = (int **)malloc(sizeof(int*) * lin);
+        for (int i = 0; i < lin; i++) {                             // iniciando uma função que aloca uma matriz dinamicamente
+            mat[i] = (int *)malloc(sizeof(int) * col);
+        }
+    }
+
+ outras funções de matrizes estão na biblioteca mat.c   

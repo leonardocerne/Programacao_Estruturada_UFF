@@ -1,0 +1,215 @@
+Váriaveis:
+int xx, Xx, xX, XX; => são diferentes entre si
+
+Operadores Lógicos:
+|| => ou
+&& => e
+
+Operadores de Incremento:
+++ => aumenta um e importa a ordem de utilização
+-- => diminui um //
+
+___________________________________________________
+
+Entrada/Saída em C (Interação com o usuário):
+
+Precisa da biblioteca stdio.h
+    #include <stdio.h> -> inclui a biblioteca de entrada e saída
+
+ a) Escrita:
+    int printf (char *formato, <lista de váriaveis>);
+
+    retorno? total de bytes escritos
+
+    -formatos existentes:
+        \n -> pula linha;
+        \t -> tab;
+        \r -> retrocede;
+        %% -> imprime um %;
+        \\ -> imprime um \;
+        \" -> imprime um ";
+
+    -formatos de variáveis:
+        %c -> char;
+        %d -> inteiro;
+        %s -> string;
+        %f -> 5 casas       -
+        %e -> científico    = > double ou float
+        %g -> ou %f ou %e   -
+        %p -> endereço de memória;
+
+    exemplo:
+        printf("chove hoje\n");
+        char c = "A";
+        printf("C = %c (%d)\n", c, c); } posicional!; }
+        float f = 2.5;
+        printf("f = %g\n", f);
+
+ b) Leitura:
+
+    int scanf(char *formato, <endereço das variáveis>);
+
+    * endereço:
+        C faz passagem por valor
+
+    * retorno:
+        Número de variáveis lidas com sucesso
+
+    -formatos existentes:
+        %c ->
+        %d ->
+        %s ->
+        %f -
+        %e - > float
+        %g -
+        %lf -
+        %le - > double
+        %lg -
+
+    exemplo:
+        int x, y;
+        printf("Digite um valor para x...\n");
+        scanf("%d", &x); -> o usuário digita um valor que vai ser atribuído a x
+        .
+        .
+        .
+        scanf("%d%d", &x, &y); -> o usuário digita dois valores separados por espaço que vão ser atribuídos respectivamente a x e y
+        char c;
+        scanf(" %c", &c); -> o usuário digita um caracter que será atribuído a c (PRECISA DO ESPAÇO EM BRANCO ANTES DO &c)
+
+ ----------------------------------------------------------
+
+Comandos de Controle de Fluxo:
+
+    -Se:
+
+    if (expressão) {
+        //corpo do if
+    }
+    else {
+        //corpo do else
+    }
+
+    *else é opcional;
+    *corpo do if ou else tiver 1 única linha, as chaves são opcionais;
+
+    exemplo:
+        int x;
+        scanf("%d, &x");
+        if (x >= 0) printf("%d maior ou igual a zero\n", x++); // printa o x e depois incrementa;
+
+    exemplo:
+        int a,b,c;
+        scanf("%d%d", &a, &b);
+        if (a >= b) c = a;
+        else c = b; // se a >= b, c recebe o valor de a, se a < b, c recebe valor de b;
+
+         // outra forma de escrever: c = (a >= b) ? a:b; // é a mesma coisa só que mais difícil de ler;
+
+    exemplo de um código que dá erro se a entrada for 7.5 por exemplo:
+        float nota;
+        scanf("%f", &nota);
+        if (nota >= 8.0)
+            if (nota <= 10.0) printf("Excelente\n");
+        else if (nota <= 7.0) printf("Bom\n"); // esse else funciona para o ultimo if, não ao primeiro, logo, tem que botar {}, ou seja:
+
+    exemplo certo:
+        float nota;
+        scanf("%f", &nota);
+        if (nota >= 8.0) {
+            if (nota <= 10.0) printf("Excelente\n");
+        }
+        else if (nota <= 7.0) printf("Bom\n");
+
+
+    - Comandos de repetição e break:
+    *break: sair da repetição mais identada
+
+    -while:
+        while (<expressão>) {
+            //corpo do while
+        }
+
+    exemplo:
+        int x;
+        scanf("%d", &x);
+        while (x < 0) scanf("%d", &x); // pede um número até ele ser positivo ou igual a 0
+
+    mesmo código usando break:
+        int x;
+        while (1) {
+            scanf("%d", &x);
+            if (x >= 0) break;  // o while é verdadeiro até um número positivo ou igual a 0 for escrito
+        }
+
+
+    -do-while:
+        do {
+            // corpo do do
+        } while (<expressão);
+
+    exemplo do código anterior:
+        int x;
+        do {
+            scanf("%d", &x);
+        } while (x < 0);
+
+
+    - for:
+        for (<inic>; <expressão>; <atualização>) {
+            // corpo do for
+        }
+
+    * <inic>, <expr> e <atualização> são opcionais
+
+    exemplo do código anterior:
+        for ( ; ; ) {
+            scanf("%d", &x);
+            if (x >= 0) break;  // o break sai do loop
+        }
+
+
+    // Loops : while(1); do { ; ; }
+
+
+    - comando continue:
+        int x;
+        scanf("%d", &x);
+        while (x <= 100) {
+            if (x % 5 == 0) {
+                x++;                     // o continue abandona a iteralçao atual e volta pro while
+                continue;                // esse código daria como saída todos os números <=1 que são múltiplos de 5
+            }
+            printf("%d\n", x++);
+        }
+
+
+    - seleção com switch:
+        switch(<expressão>) {     // val1, val2, ..., valn: char ou int, default é opcional
+            case val1:
+                //comandos;
+                  break;
+            case val2:
+                //comandos;
+                  break;
+            .
+            .
+            .
+            default:
+                //comandos;
+        }
+
+
+
+    EXERCICIO 1:
+
+    Escreva um programa em C que simule uma calculadora de int. Sua calcula executa "infinitamente" até que seja recebi-
+    da a entrada "q" ou "Q" como operadores. Os operadores válidos são os seguintes: "+, "-", "/", "%" e "*".
+
+    Entrada    -    Saída
+    1 + 2 --------> 1 + 2 = 3
+    1 - 2 --------> 1 - 2 = -1
+    5 / 2 --------> 5 / 2 = 2
+    5 % 2 --------> 5 % 2 = 1
+    3 # 5 --------> inválido
+    3 q 5 --------> sair do programa
