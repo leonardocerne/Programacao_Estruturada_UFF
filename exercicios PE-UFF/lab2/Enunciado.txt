@@ -1,0 +1,11 @@
+Exercícios:
+
+-> Escreva um programa que ordena uma turma de alunos: void ordena (char** turma, int n);
+
+-> Escreva um programa que retire toda a pontuação, passada como parâmetro, de um arquivo texto, gerando um novo arquivo: void ret_pont (char *arq_ent, char *arq_saida, char **pontuacao, int n);
+
+-> Escreva uma função recursiva para comparar uma parte de duas strings. Sua função recebe os dois índices e as duas strings, e retorna os seguintes valores:
+                              0, s1 = s2, [i1, i2]
+f(s1, s2, i1, i2) =  1, s1 > s2, [i1, i2]
+                             -1, caso contrário.
+Pode ser informado i1 > i2. Seu programa deve passar como terceiro (quarto) parâmetro, o menor (maior) índice: int f(char *s1, char *s2, int i1, int i2);
