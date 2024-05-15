@@ -1,0 +1,95 @@
+Listas:
+    *motivação:
+        . uso exato de memória necessária;
+        . vetor(ou matriz) tem tamanho FIXO: superdimensionamento ou subdimensionamento;
+    
+    *solução: listas!
+    
+    *uma lista simplesmente encadeada(lse) é:
+        -> ou uma lista vazia (NULL);
+        -> ou é composta de um elemento seguido de uma sublista
+    
+    *elemento: informação + ponteiro p/o próximo elemento!
+
+    *nós vamos cuidar do campo próximo!
+
+    obs:
+        . l sempre aponta pro primeiro elemento da lista;
+        . o último elemento aponta pra NULL!;
+        . k-ésimo elemento?
+            1º -> 2º -> 3º -> ... -> (k-1)º -> kº;
+    exemplo:
+        l = NULL;
+        l -> [5|ponteiro];
+    *operações?
+        -inicializar;
+        -ordenar: 0(n^2);
+        -inserir{
+            -primeira
+            -ultima
+            -ordenado
+        }
+        -buscar um elemento (1ª ocorrência);
+        -retirar{
+            -1ª ocorrência
+            -kº elemento
+            -ultimo
+            -todas as ocorrências
+        }
+        -imprimir
+        -liberar(destruir)
+
+    alguns comandos:
+        typedef struct lse{
+            int info;
+            struct lse *prox;
+        }TLSE;
+
+        TLSE *TLSE_inicializa(void) {
+            return NULL;
+        }
+        TLSE *TLSE_ins_ini(TLSE *l, int x) {
+            TLSE *novo = (TLSE *)malloc(sizeof(TLSE));          \\ cria um tipo TLSE, atualiza as infos dele, e retorna o ponteiro pra ele.
+            novo -> info = x;
+            novo -> prox = l;
+            return novo;
+        }
+        void TLSE_imprime(TLSE *l){
+            TLSE *p = l;
+            while(p) {
+                printf("%d\n", p->info);        \\ vai do primeiro até o ultimo elemento apontando sempre pro próximo, para quando chega em NULL
+                p = p->prox;
+            }
+        }
+        void TLSE_imp_rec(TLSE *l){
+            if(l) {
+                printf("%d\n", l -> info);      \\ imprime de forma recursiva 
+                TLSE_imp_rec(l -> prox);
+            }
+        }
+        void TLSE_imp_rec_rev(TLSE *l) {
+            if(l) {
+                TLSE_imp_rec_rev(l->prox);
+                printf("%d\n", l->info);        \\ imprime de forma recursiva ao contrário
+            }
+        }
+        //na main
+        TLSE *l = NULL;     // ou
+        *l1 = TLSE_inicializa(); 
+        l = TLSE_ins_ini(l, 1); \\ insere no começo
+        l = TLSE_ins_ini(l, 2);
+        l = TLSE_ins_ini(l, 0); \\ a lista até agora tá (0, 2, 1)
+        TLSE_imprime(l);
+        printf("\n");
+        TLSE_imp_rec(l);
+        printf("\n");
+        TLSE_imp_rec_rev;
+
+
+
+
+
+        
+
+
+
