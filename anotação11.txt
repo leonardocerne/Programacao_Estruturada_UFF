@@ -73,6 +73,77 @@ Listas:
                 printf("%d\n", l->info);        \\ imprime de forma recursiva ao contrário
             }
         }
+        void TLSE_libera(TLSE *l) {
+            TLSE *p = l, *t;
+            while(p) {
+                t = p;
+                p = p->prox;
+                free(t);
+            }
+        }
+        void TLSE_libera_rec(TLSE *l) {
+            if(l) {
+                TLSE_lib_rec(l->prox);
+                free(l);
+            }
+        }
+        void TLSE_imp_rev_it(TLSE *l) {
+            TLSE *p = l, *laux = NULL;
+            while(p) {
+                laux = TLSE_ins_ini(laux, p->info);
+                p = p->prox;
+            }
+            TLSE_imprime(laux);
+            TLSE_libera(laux);
+        }    
+        TLSE *TLSE_busca(TLSE *l, int x) {
+            TLSE * resp = l;
+            while ((resp) && (resp -> info != x))
+                resp = resp -> prox;
+            return resp;
+        }
+        TLSE *TLSE_busca_rec(TLSE *l, int x) {
+            if((!l) || (l->info == x))
+                return l;
+            return TLSE_busca_rec(l->prox, x);
+        }
+        TLSE *TLSE_busca2_rec(TLSE *l, int x, int *pos) {
+            (*pos) = 1;
+            return TLSE_busca2_rec_aux(l, x, pos);
+        }
+        TLSE *TLSE_busca2_rec_aux(TLSE *l, int x, int *pos) {
+            if(!l) {
+                (*pos) = -1;
+                return NULL;
+            }
+            if(l->info==x) return l;
+            (*pos)++;
+            return TLSE_busca2_rec_aux(l->prox, x, pos);
+        }
+        TLSE *TLSE_retira(TLSE *l, int x) {
+            TLSE *ant = NULL, *p = l;
+            while((p) && (p->info!=x)) {
+                ant = p;
+                p = p->prox;
+            }
+            i(!p) return l;
+            if(!ant) l = l->prox;
+            else ant->prox = p->prox;
+            free(p);
+            return l;
+        }
+        TLSE *TLSE_ret_rec(TLSE *l, int x) {
+            if(!l) return l;
+            if(l->info==x){
+                TLSE *t = l;
+                l = l->prox;
+                free(t);
+            }
+            else{
+                l->prox = TLSE_ret_rec(l->prox, x);
+                return l;
+            }
+        }
         //na main
         TLSE *l = NULL;     // ou
         *l1 = TLSE_inicializa(); 
@@ -85,11 +156,5 @@ Listas:
         printf("\n");
         TLSE_imp_rec_rev;
 
-
-
-
-
-        
-
-
+ *recursivo => iterativo: uso de memória adicional!
 
