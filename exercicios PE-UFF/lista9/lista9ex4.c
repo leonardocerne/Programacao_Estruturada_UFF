@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include "TLSE.c"
+#include "TLDE.c"
 
-TLSE *copia(TLSE *l) {
-    TLSE *nova = NULL, *p = l;
+TLDE *copia (TLDE *l){
+    TLDE *nova = NULL, *p = l;
     int x,tam = 0;
     while(p) {
         tam++;
@@ -11,10 +11,10 @@ TLSE *copia(TLSE *l) {
     p = l;
     int fim = tam-1;
     for(int i = 0; i < tam; i++) {
-        TLSE *q = p;
+        TLDE *q = p;
         for(int j = 0; j < fim; j++) q = q->prox;
         x = q->info;
-        nova = TLSE_insere(nova, x);
+        nova = TLDE_ins_ini(nova, x);
         fim--;
     }
     return nova;
@@ -22,20 +22,20 @@ TLSE *copia(TLSE *l) {
 
 int main(void) {
     int x, n;
-    TLSE *l = TLSE_inicializa();
+    TLDE *l = TLDE_inicializa();
     printf("Insira quantos elementos a lista tera: ");
     scanf("%d", &n);
     for(int i = 0; i < n; i++){
         scanf("%d", &x);
-        l = TLSE_insere(l, x);
+        l = TLDE_ins_ini(l, x);
     }
-    TLSE *nova = copia(l);    
+    TLDE *nova = copia(l);    
     printf("Aqui esta sua lista original: ");
-    TLSE_imprime(l);
+    TLDE_imprime(l);
     printf("\n");
     printf("Aqui esta sua copia: ");
-    TLSE_imprime(nova);
-    TLSE_libera(l);
-    TLSE_libera(copia);
+    TLDE_imprime(nova);
+    TLDE_libera(l);
+    TLDE_libera(copia);
     return 0;
 }

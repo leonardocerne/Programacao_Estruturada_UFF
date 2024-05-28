@@ -1,0 +1,31 @@
+Listas Duplamente Encadeadas
+ *motivação:
+    -simulação de uma rede com "cabeamento"
+*no inicio...
+    l = NULL 
+    l recebe 3
+        [NULL, 3, NULL]
+    l recebe 5 no inicio:
+        [NULL, 5, Pont p prox] - [Pont p ant, 3, NULL]
+    l recebe 1 no inicio:
+        [NULL, 1, Pont p prox] - [Pont p ant, 5, Pont p prox] - [Pont p ant, 3, NULL]
+*elemento(ou nó):
+    [ponteiro pro anterior, info, ponteiro pro próximo]
+
+*nota:
+    -o 1 elemento tem o pont p ant apontando pra NULL;
+    -o último elemento tem o pont p prox apontando pra NULL;
+*como montar:
+    typedef struct lde{
+        int info;
+        struct lde *ant, *prox;
+    }TLDE;
+
+*funções "iguais" a TLSE: codificação identica só muda o tipo:
+    TLDE *TLDE_inicializa(void);
+    void TLDE_imprime(TLDE *l);
+    void TLDE_libera(TLDE *l);
+    TLDE *TLDE_busca(TLDE *l, int x);
+*funções diferentes de TLSE:
+    TLDE *TLDE_retira(TLDE *l, int x);
+    TLDE *TLDE_ins_ini(TLDE *l, int x);

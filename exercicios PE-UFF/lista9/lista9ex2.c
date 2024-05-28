@@ -1,36 +1,36 @@
 #include <stdio.h>
-#include "TLSE.c"
+#include "TLDE.c"
 
-TLSE *inv(TLSE *l) {
-    TLSE *nova = NULL, *p = l;
+TLDE *inverte(TLDE *l) {
+    TLDE *nova = NULL, *p = l;
     int x;
     while(p) {
         x = p->info;
-        nova = TLSE_insere(nova, x);
+        nova = TLDE_ins_ini(nova, x);
         p = p->prox;
     }
     return nova;
 }
 
 int main(void) {
-    TLSE *l = TLSE_inicializa();
+    TLDE *l = TLDE_inicializa();
     int x, n;
     printf("Insira quantos elementos voce quer botar na lista: ");
     scanf("%d", &n);
     for(int i = 0; i < n; i++) {
         scanf("%d", &x);
-        l = TLSE_insere(l, x);
+        l = TLDE_ins_ini(l, x);
     }
     printf("A lista original e: ");
-    TLSE_imprime(l);
+    TLDE_imprime(l);
     printf("\n");
-    TLSE *nova = inv(l);
+    TLDE *nova = inverte(l);
     printf("A lista original continua sendo: ");
-    TLSE_imprime(l);
+    TLDE_imprime(l);
     printf("\n");
     printf("E a lista invertida fica: ");
-    TLSE_imprime(nova);
-    TLSE_libera(l);
-    TLSE_libera(nova);
+    TLDE_imprime(nova);
+    TLDE_libera(l);
+    TLDE_libera(nova);
     return 0;
 }
