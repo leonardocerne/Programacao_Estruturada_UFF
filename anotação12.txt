@@ -29,3 +29,4 @@ Listas Duplamente Encadeadas
 *funções diferentes de TLSE:
     TLDE *TLDE_retira(TLDE *l, int x);
     TLDE *TLDE_ins_ini(TLDE *l, int x);
+v

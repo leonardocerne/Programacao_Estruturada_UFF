@@ -1,0 +1,14 @@
+Listas simplesmente encadeadas circulares:
+ *motivação:
+    ->simulação de uma rede em anel
+ *diferença p/ LSE:
+    Campo prox do ultimo aponta p/ o primeiro.
+
+Funções na biblioteca.
+
+Listas simplesmente encadeadas com descritor:
+ *motivação:
+    ->operações de inserção e retirada passam a ser tipo void;
+    ->auxilia na implementação de pilhas e filas - independente da implementação.
+
+Funções na biblioteca.

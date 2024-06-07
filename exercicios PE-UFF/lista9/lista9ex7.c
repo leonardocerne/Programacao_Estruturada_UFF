@@ -1,37 +1,33 @@
 #include <stdio.h>
 #include "TLDE.c"
 
+TLDE *desloca(TLDE *l) {
+    TLDE *p = l;
+    int aux = p->info;
+    while(p->prox){
+        p->info = p->prox->info;
+        p = p->prox;
+    }
+    p->info = aux;
+    return l;
+}
+
 void i_p (TLDE *l){
-    TLDE *p = l, *ult, *aux;
-    int pares = 0, imp = 0;
-    while(p){
-        if(p->info % 2 == 0) pares++;
-        ult = p;
+    TLDE *p = l;
+    int tam = 0;
+    while(p) {
+        tam++;
         p = p->prox;
     }
     p = l;
-    while(p) {
-        if((p->info % 2 == 0) && (pares > 0)) {
-            TLDE *no = TLDE_ins_ini(NULL, p->info);
-            no->ant = ult;
-            ult->prox = no;
-            if(p->ant){
-                p->ant->prox = p->prox;
-                p->prox->ant = p->ant;
-            }
-            else{
-                p->prox->ant = NULL;
-            }
-            aux = p;
-            p = p->prox;
-            free(aux);
-            ult = no;
-            pares--;
+    while(tam) {
+        if(p->info % 2 == 0) {
+            p = desloca(p);
+            tam--;
         }
         else{
-            if((imp == 0) && (pares > 0)) l = p;
+            tam--;
             p = p->prox;
-            imp++;
         }
     }
 }

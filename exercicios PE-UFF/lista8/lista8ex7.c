@@ -1,37 +1,33 @@
 #include <stdio.h>
 #include "TLSE.c"
 
+TLSE *desloca(TLSE *l) {
+    TLSE *p = l;
+    int aux = p->info;
+    while(p->prox) {
+        p->info = p->prox->info;
+        p = p->prox;
+    }
+    p->info = aux;
+    return l;
+}
+
 void i_p (TLSE *l){
-    int pares = 0, c = 0, ci = 0;
-    TLSE *p = l, *ant = NULL, *ult, *aux;
+    TLSE *p = l;
+    int tam = 1;
     while(p) {
-        if(p->info % 2 == 0) pares++;
+        tam++;
         p = p->prox;
     }
     p = l;
-    while(p) {
-        ult = p;
-        p = p->prox;
-    }
-    p = l;
-    while(p) {
-        if((p->info % 2 == 0) && (c < pares)) {
-            TLSE *novo = (TLSE*)malloc(sizeof(TLSE));
-            novo->info = p->info;
-            novo->prox = NULL;
-            ult->prox = novo;
-            ult = ult->prox;
-            c++;
-            aux = p;
-            p = p->prox;
-            free(aux);
-            if(ant) ant->prox = p;
+    while(tam >= 0){
+        if(p->info % 2 == 0) {
+            p = desloca(p);
+            tam--;
         }
         else {
-            if(ci == 0) l = p;
-            ant = p;
             p = p->prox;
-            ci++;
+            tam--;
         }
     }
 }
