@@ -1,0 +1,17 @@
+PILHAS
+ *motivação:
+  -ED mais usada
+  -implementada em hardware ex: pilha de execução
+  -ED eficiente: maioria das operações sao O(1)!
+
+ *E/S bem definida: TOPO DA PILHAS
+
+ *estratégia LIFO (Last In First Out)
+
+ *Outra analogia: pilha de pratos;
+
+ *Operações bem definidas:
+    -push -> inserção;
+    ->pop -> retirada;
+ 
+ Funções na biblioteca.
