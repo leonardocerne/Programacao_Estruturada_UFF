@@ -14,3 +14,4 @@ TLC *TLC_busca(TLC *l, int x);
 TLC *TLC_ins_mais_facil(TLC *l, int x);
 TLC *TLC_ins_ult(TLC *l, int x);
 TLC *retira(TLC *l, int x);
+void inverte(TLC *l);

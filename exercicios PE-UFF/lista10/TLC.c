@@ -6,10 +6,10 @@ TLC *TLC_inicializa(){
 
 void TLC_imprime(TLC *l){
     if(l){
-        printf("%d\n", l->info);
+        printf("%d ", l->info);
         TLC *p = l->prox;
         while(p != l){
-            printf("%d\n", p->info);
+            printf("%d ", p->info);
             p = p->prox;
         }
     }
@@ -95,4 +95,26 @@ TLC *retira(TLC *l, int x){
     if(p == l) l = l->prox;
     free(p);
     return l;
+}
+
+void inverte(TLC *l){
+    TLC *p = l;
+    int tam = 0, fim, tmp;
+    do{
+        tam++;
+        p = p->prox;
+    }while(p != l);
+    p = l;
+    fim = tam - 1;
+    for(int i = 0; i < tam / 2; i++) {
+        TLC *q = p;
+        for(int j = 0; j < fim; j++) {
+            q = q->prox;
+        }
+        tmp = q->info;
+        q->info = p->info;
+        p->info = tmp;
+        p = p->prox;
+        fim -= 2;
+    }
 }
