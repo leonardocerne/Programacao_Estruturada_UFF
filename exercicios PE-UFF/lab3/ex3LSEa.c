@@ -1,10 +1,14 @@
 #include "TLSE.c"
 
 void mult_k1(TLSE *l, int k){
-    TLSE *p = l, *ant = l, *tmp, *tmp2;
-    int temp;
+    TLSE *p = l, *ant = l, *tmp;
+    if(!l) return;
     while(p){
         if(p->info % k == 0){
+            if((!p->prox) && (ant == l)){
+              free(p);
+              return;
+            }
             if(p != ant){
               ant->prox = p->prox;
               tmp = p;

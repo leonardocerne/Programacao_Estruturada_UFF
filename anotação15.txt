@@ -1,0 +1,8 @@
+FILAS:
+ *motivação:
+    -simulação de uma fila SEM prioridade;
+    -hardware:
+     .fila de impressão
+ *estrategia bem definida de E/S:
+    FIFO (First In First Out)
+ Funções na biblioteca.

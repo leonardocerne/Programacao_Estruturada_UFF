@@ -11,6 +11,7 @@ TLSE *mult_k2(TLSE *l, int k){
     TLSE_libera(p);
     return nova;
 }
+
 int main(void){
   TLSE *l = TLSE_inicializa();
   int x, k;

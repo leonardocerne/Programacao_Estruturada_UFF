@@ -2,14 +2,14 @@
 
 void mult_k5(TLC *l, int k){
     TLC *p = l, *tmp, *ant = p;
-    if(p->info % k == 0){
+    while(p->info % k == 0){
         p->info = p->prox->info;
         tmp = p->prox;
         p->prox = tmp->prox;
         free(tmp);
     }
-    else p = p->prox;
-    while((p) && (p != l)){
+    p = p->prox;
+    while(p != l){
         if(p->info % k == 0){
             ant->prox = p->prox;
             tmp = p;

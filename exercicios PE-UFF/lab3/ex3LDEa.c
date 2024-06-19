@@ -19,7 +19,6 @@ void mult_k3(TLDE *l, int k){
                 tmp->info = temp;
                 tmp->ant->prox = tmp->prox;
                 tmp->prox->ant = tmp->ant;
-                p = tmp->prox;
                 free(tmp);
             }
         }
